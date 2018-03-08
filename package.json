@@ -1,6 +1,6 @@
 {
 	"name": "pm2-githook2",
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"description": "A PM2 module to receive webhook requests from github/gitlab and ask pm2 to reload the application for you ",
 	"main": "index.js",
 	"scripts": {
@@ -70,6 +70,7 @@
 				}
 			}
 		},
+		"host": "http://127.0.0.1",
 		"slack": {
 			"webhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX",
 			"channel": ""

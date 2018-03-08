@@ -20,6 +20,7 @@ For now this is the way, until I publish this to npm.
 
 - `port` (Defaults to `8888`) : The port that will be used by the http server to receive hooks.
 - `logsDir` : The log dir where all the logs will be stored, saved with an internal logrotate. This will also have the output of all the hooks output unlike pm2's logs of the module, which will only have success and error messages.
+- `host` : The servers public address to send in slack messages for reports
 - `slack` : Contains slack options in JSON :
 
 	```json
