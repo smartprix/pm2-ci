@@ -10,13 +10,14 @@ const pm2 = require('pm2');
 const Worker = require('./lib/Worker');
 const slack = require('./lib/slack');
 const logger = require('./lib/logger');
-const {localeDateString} = require('./lib/helpers');
-
 
 /**
  * Init pmx module
  */
 pmx.initModule({}, (err, conf) => {
+	if (typeof (conf.slack) !== 'object') {
+		conf.slack = JSON.parse(conf.slack);
+	}
 	logger.init(conf.logsDir);
 	slack.init(conf.slack);
 
