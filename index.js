@@ -22,7 +22,7 @@ pmx.initModule({}, (err, conf) => {
 
 	pm2.connect((err2) => {
 		if (err || err2) {
-			logger.error('[%s] Error: %s', localeDateString(), JSON.stringify(err || err2));
+			logger.error('Error: %s', JSON.stringify(err || err2));
 			process.exit(1);
 			return;
 		}
