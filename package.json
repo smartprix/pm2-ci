@@ -64,9 +64,13 @@
 				"posthook": "echo done",
 				"service": "github",
 				"tests": {
-					"testCmd": "npm run test",
+					"testCmd": "npm run install && npm run test",
 					"reportPath": "testReport/filename",
 					"lastGoodCommit": "COMMIT_HASH"
+				},
+				"git": {
+					"token": "",
+					"remoteUrl": ""
 				}
 			}
 		},
