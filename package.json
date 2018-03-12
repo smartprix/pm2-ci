@@ -1,6 +1,6 @@
 {
 	"name": "pm2-githook2",
-	"version": "2.1.1",
+	"version": "2.2.0",
 	"description": "A PM2 module to receive webhook requests from github/gitlab and ask pm2 to reload the application for you ",
 	"main": "index.js",
 	"scripts": {
@@ -71,6 +71,10 @@
 				"git": {
 					"token": "",
 					"remoteUrl": ""
+				},
+				"privateConfig": {
+					"src": "/root/source/private/config.js",
+					"dest": "private/config.js"
 				}
 			}
 		},
