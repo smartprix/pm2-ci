@@ -1,6 +1,6 @@
 {
 	"name": "pm2-githook2",
-	"version": "2.2.0",
+	"version": "2.3.0",
 	"description": "A PM2 module to receive webhook requests from github/gitlab and ask pm2 to reload the application for you ",
 	"main": "index.js",
 	"scripts": {
@@ -37,6 +37,7 @@
 		"async": "^2.6.0",
 		"fs-extra": "^5.0.0",
 		"ipaddr.js": "^1.2.0",
+		"lowdb": "^1.0.0",
 		"nodegit": "^0.21.0",
 		"pm2": "^2.0.18",
 		"pmx": "^0.6.8",
