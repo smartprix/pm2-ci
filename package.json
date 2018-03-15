@@ -68,7 +68,7 @@
 					"testCmd": "npm run install && npm run test",
 					"reportPath": "testReport/filename",
 					"lastGoodCommit": "COMMIT_HASH",
-					"deployAnyway": "true"
+					"deployAnyway": true
 				},
 				"git": {
 					"token": "",
