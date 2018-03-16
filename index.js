@@ -10,6 +10,7 @@ const pm2 = require('pm2');
 const Worker = require('./lib/Worker');
 const slack = require('./lib/slack');
 const logger = require('./lib/logger');
+const db = require('./lib/db');
 
 /**
  * Init pmx module
@@ -18,8 +19,9 @@ pmx.initModule({}, (err, conf) => {
 	if (typeof (conf.slack) !== 'object') {
 		conf.slack = JSON.parse(conf.slack);
 	}
-	logger.init(conf.logsDir);
+	logger.init(`${conf.logsDir}/logs`);
 	slack.init(conf.slack);
+	db.setPath(`${conf.logsDir}/db`);
 
 	pm2.connect((err2) => {
 		if (err || err2) {

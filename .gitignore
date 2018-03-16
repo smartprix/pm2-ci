@@ -7,3 +7,4 @@ test/child
 *.iml
 .idea/**
 db.json
+*.db
