@@ -23,12 +23,25 @@ pmx.initModule({}, (err, conf) => {
 	slack.init(conf.slack);
 	db.setPath(`${conf.logsDir}/db`);
 
-	pm2.connect((err2) => {
+	pm2.connect(async (err2) => {
 		if (err || err2) {
 			logger.error('Error: %s', JSON.stringify(err || err2));
 			process.exit(1);
 			return;
 		}
+		const tests = await db.getDb('tests');
+		try {
+			await tests.update(
+				{apps: {$exists: true}},
+				{$addToSet: {apps: {$each: Object.keys(conf.apps)}}},
+				true
+			);
+		}
+		catch (e) {
+			await tests.insert({apps: Object.keys(conf.apps)});
+		}
+		await tests.compact();
+
 		// init the worker only if we can connect to pm2
 		new Worker(conf).start();
 	});
