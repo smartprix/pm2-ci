@@ -1,0 +1,92 @@
+{{!-- mochawesome-report-generator | MIT License | https://github.com/adamgruber/mochawesome-report-generator --}}
+{{!-- mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}}
+<html>
+
+<head>
+	<link href="./assets/app.css" media="all" rel="stylesheet" type="text/css">
+	<title>Tests for app {{appName}}</title>
+</head>
+
+<body>
+	<div id=report>
+		<main>
+			<div class="navbar--component---2ZZWk z-depth-1">
+				<div class="navbar--report-info-cnt---3YmqH">
+					<a href="/">
+						<button class="navbar--menu-button---2yldF open-menu">
+							<i class="material-icons">↰</i>
+						</button>
+					</a>
+					<h1 class="navbar--report-title---2yl5e" title="{{appName}}">
+						<b>{{appName}}</b>
+					</h1>
+				</div>
+				<div class="navbar--pct-bar---1gzOu">
+					<span class="navbar--pct-bar-segment---3SKvk navbar--pass---2A0P1" style="width: 100%;" title="100.0% Passing"></span>
+					<span class="navbar--pct-bar-segment---3SKvk navbar--fail---2K0uE" style="width: 0%;" title="0.0% Failing"></span>
+				</div>
+			</div>
+			<div id="details" class="details container">
+				<div class="suite--list-main---39CaH">
+					{{#each (tests db appName)}}
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+						<header class="suite--header---3CWtn">
+							<h3 class="suite--title---CsLhu">
+								<a href="{{this.commit.url}}">
+									{{this.commit.hash}}
+								</a>
+							</h3>
+							<h6 class="suite--filename---3LR5s">{{this.commit.message}} - {{this.commit.author}}</h6>
+							<ul class="suite-summary--component---1-m65">
+								<li class="suite-summary--summary-item---eDFZD suite-summary--duration---1c853">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>
+									<span class="">{{this.report.duration}}</span>
+								</li>
+								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.tests}}</li>
+								<li class="suite-summary--summary-item---eDFZD suite-summary--passed---171Lb">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.passes}}</li>
+								<li class="suite-summary--summary-item---eDFZD suite-summary--failed---3NDrR">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.failures}}</li>
+								<li class="suite-summary--summary-item---eDFZD suite-summary--pending---14ai0">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.skipped}}</li>
+							</ul>
+						</header>
+						<div class="suite--body---2Ql-3">
+							<div class="">
+								<section id="3b66f77e-9240-4f0e-8246-7f824a67b2cb" class="test--component---RMLbQ test--passed---1IkMe">
+									<header class="test--header---186ZB">
+										{{#if this.pass}}
+											<i class="material-icons md-18 test--icon---3-EYW test--pass---3BGXV"></i>
+										{{else}}
+											<i class="material-icons md-18 test--icon---3-EYW test--fail---2MHvz"></i>
+										{{/if}}
+										<h4 class="test--title---278p8" title="Full Report">
+										<a href="/{{../appName}}/{{this.commit.hash}}" >
+											<b>Full Report</b>
+										</a>
+										</h4>
+										<div class="test--info---1upSW">
+											<span class="test--duration---16Zhh">{{this.commit.time}}</span>
+											<i class="material-icons md-18 test--duration-icon---2Bpxk fast"></i>
+										</div>
+									</header>
+								</section>
+							</div>
+						</div>
+					</section>
+					{{/each}} 
+					{{#unless (tests db appName)}}
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+						<header class="suite--header---3CWtn">
+							<h3 class="suite--title---CsLhu">Nothing Here.</h3>
+						</header>
+					</section>
+					{{/unless}}
+				</div>
+			</div>
+		</main>
+	</div>
+</body>
+
+</html>

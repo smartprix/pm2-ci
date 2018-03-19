@@ -1,0 +1,50 @@
+{{!-- mochawesome-report-generator | MIT License | https://github.com/adamgruber/mochawesome-report-generator --}}
+{{!-- mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}}
+<html>
+
+<head>
+	<link href="./assets/app.css" media="all" rel="stylesheet" type="text/css">
+	<title>List of Apps</title>
+</head>
+
+<body>
+	<div id=report>
+		<main>
+			<div class="navbar--component---2ZZWk z-depth-1">
+				<div class="navbar--report-info-cnt---3YmqH">
+					<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+					<h1 class="navbar--report-title---2yl5e" title="{{appName}}">
+						<b>List of Apps:</b>
+					</h1>
+				</div>
+				<div class="navbar--pct-bar---1gzOu">
+					<span class="navbar--pct-bar-segment---3SKvk navbar--pass---2A0P1" style="width: 100%;" title="100.0% Passing"></span>
+					<span class="navbar--pct-bar-segment---3SKvk navbar--fail---2K0uE" style="width: 0%;" title="0.0% Failing"></span>
+				</div>
+			</div>
+			<div id="details" class="details container">
+				<div class="suite--list-main---39CaH">
+					{{#each apps}}
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+						<header class="suite--header---3CWtn">
+							<h3 class="suite--title---CsLhu">
+								<a href="/{{this}}">
+									{{this}}
+								</a>
+							</h3>
+						</header>
+					</section>
+					{{/each}} 
+					{{#unless apps.length}}
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+						<header class="suite--header---3CWtn">
+							<h3 class="suite--title---CsLhu">Nothing Here.</h3>
+						</header>
+					</section>
+					{{/unless}}
+				</div>
+			</div>
+		</main>
+	</div>
+</body>
+</html>
