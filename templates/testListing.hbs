@@ -42,7 +42,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 							<ul class="suite-summary--component---1-m65">
 								<li class="suite-summary--summary-item---eDFZD suite-summary--duration---1c853">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>
-									<span class="">{{this.report.duration}}</span>
+									<span class="">{{this.report.duration}}ms</span>
 								</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.tests}}</li>
@@ -51,7 +51,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 								<li class="suite-summary--summary-item---eDFZD suite-summary--failed---3NDrR">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.failures}}</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--pending---14ai0">
-									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.skipped}}</li>
+									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{add this.report.skipped this.report.pending}}</li>
 							</ul>
 						</header>
 						<div class="suite--body---2Ql-3">
