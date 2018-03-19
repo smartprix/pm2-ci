@@ -1,5 +1,5 @@
-{{!-- mochawesome-report-generator | MIT License | https://github.com/adamgruber/mochawesome-report-generator --}}
-{{!-- mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}}
+{{!-- mochawesome-report-generator | MIT License | https://github.com/adamgruber/mochawesome-report-generator --}} {{!--
+mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}}
 <html>
 
 <head>
@@ -18,7 +18,9 @@
 						</button>
 					</a>
 					<h1 class="navbar--report-title---2yl5e" title="{{appName}}">
-						<b>{{appName}}</b>
+						<a href="/{{appName}}">
+							<b>{{appName}}</b>
+						</a>
 					</h1>
 				</div>
 				<div class="navbar--pct-bar---1gzOu">
@@ -54,33 +56,52 @@
 						</header>
 						<div class="suite--body---2Ql-3">
 							<div class="">
-								<section id="3b66f77e-9240-4f0e-8246-7f824a67b2cb" class="test--component---RMLbQ test--passed---1IkMe">
-									<header class="test--header---186ZB">
-										{{#if this.pass}}
+								<section class="test--component---RMLbQ test--passed---1IkMe">
+									<a href="/{{../appName}}/{{this.commit.hash}}">
+										<header class="test--header---186ZB">
+											{{#if this.pass}}
 											<i class="material-icons md-18 test--icon---3-EYW test--pass---3BGXV"></i>
-										{{else}}
+											{{else}}
 											<i class="material-icons md-18 test--icon---3-EYW test--fail---2MHvz"></i>
-										{{/if}}
-										<h4 class="test--title---278p8" title="Full Report">
-										<a href="/{{../appName}}/{{this.commit.hash}}" >
-											<b>Full Report</b>
-										</a>
-										</h4>
-										<div class="test--info---1upSW">
-											<span class="test--duration---16Zhh">{{this.commit.time}}</span>
-											<i class="material-icons md-18 test--duration-icon---2Bpxk fast"></i>
-										</div>
-									</header>
+											{{/if}}
+											<h4 class="test--title---278p8" title="Full Report">
+												<b>Full Report</b>
+											</h4>
+											<div class="test--info---1upSW">
+												<span class="test--duration---16Zhh">{{this.commit.time}}</span>
+												<i class="material-icons md-18 test--duration-icon---2Bpxk fast"></i>
+											</div>
+										</header>
+									</a>
 								</section>
 							</div>
 						</div>
 					</section>
-					{{/each}} 
+					{{/each}}
 					{{#unless (tests db appName)}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
 						<header class="suite--header---3CWtn">
-							<h3 class="suite--title---CsLhu">Nothing Here.</h3>
+							<h3 class="suite--title---CsLhu">{{msg}}</h3>
 						</header>
+					</section>
+					{{/unless}}
+					{{#unless noHook}}
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+						<header class="suite--header---3CWtn">
+							<h3 class="suite--title---CsLhu">Start Manual Hook</h3>
+						</header>
+						<div class="suite--body---2Ql-3">
+							<section class="test--component---RMLbQ">
+								<header class="test--header---186ZB">
+									<h4 class="test--title---278p8" title="Full Report">
+										<form action="/{{appName}}" method="get">
+											<input type="text" name="secret" placeholder="Secret">
+											<input type="submit" value="Submit">
+										</form>
+									</h4>
+								</header>
+							</section>
+						</div>
 					</section>
 					{{/unless}}
 				</div>
