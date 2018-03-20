@@ -32,7 +32,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 			<div id="details" class="details container">
 				<div class="suite--list-main---39CaH">
 					{{#each (tests db appName)}}
-					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">
 								<a href="{{this.commit.url}}">
@@ -55,7 +55,8 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE034;</i>{{this.report.pending}}</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE047;</i>{{this.report.skipped}}</li>
-
+								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6 reload" id="{{this.commit.hash}}">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5D5;</i>Redo</li>
 							</ul>
 						</header>
 						<div class="suite--body---2Ql-3">
@@ -91,28 +92,49 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 						</div>
 					</section>
 					{{/each}} {{#unless (tests db appName)}}
-					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">{{msg}}</h3>
 						</header>
 					</section>
 					{{/unless}} {{#unless noHook}}
-					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">Start Manual Hook</h3>
 						</header>
 						<div class="suite--body---2Ql-3">
-							<section class="test--component---RMLbQ">
-								<header class="test--header---186ZB">
-									<h4 class="test--title---278p8" title="Full Report">
-										<form action="/{{appName}}" method="get">
-											{{!-- Add input for commit hash --}}
-											<input type="text" name="secret" placeholder="Secret">
+							<form action="/{{appName}}" method="get">
+								<section class="test--component---RMLbQ">
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Full Report">
+											<input id="secret" type="text" name="secret" placeholder="Secret">
+										</h4>
+									</header>
+								</section>
+								<section class="test--component---RMLbQ">
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Full Report">
+											<input id="manualCommit" type="text" name="commit" placeholder="Commit (Empty if latest)">
+											&nbsp;&nbsp;&nbsp;&nbsp;(Bisect will not be done if older commit)
+										</h4>
+									</header>
+								</section>
+								<section class="test--component---RMLbQ">
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Full Report">
+											&nbsp;&nbsp;
+											<input type="checkbox" name="slack"> &nbsp;&nbsp;&nbsp;&nbsp;Send Slack
+										</h4>
+									</header>
+								</section>
+								<section class="test--component---RMLbQ">
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Full Report">
 											<input type="submit" value="Submit">
-										</form>
-									</h4>
-								</header>
-							</section>
+										</h4>
+									</header>
+								</section>
+							</form>
 						</div>
 					</section>
 					{{/unless}}
@@ -127,6 +149,14 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 		tests[i].addEventListener('click', function () {
 			this.getElementsByClassName('test--component---RMLbQ')[0].classList.toggle('test--expanded---1lye7');
 		});
+	}
+	const reloads = document.getElementsByClassName('reload');
+	for (let i = 0; i < reloads.length; i++) {
+		reloads[i].addEventListener('click', function () {
+			const commit = document.getElementById('manualCommit');
+			commit.value = this.id;
+			commit.scrollIntoView({behavior: 'smooth'});
+		})
 	}
 </script>
 
