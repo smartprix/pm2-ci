@@ -55,37 +55,42 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 							</ul>
 						</header>
 						<div class="suite--body---2Ql-3">
-							<div class="">
+							<div>
 								<section class="test--component---RMLbQ test--passed---1IkMe">
-									<a href="/{{../appName}}/{{this.commit.hash}}">
-										<header class="test--header---186ZB">
-											{{#if this.pass}}
-											<i class="material-icons md-18 test--icon---3-EYW test--pass---3BGXV"></i>
-											{{else}}
-											<i class="material-icons md-18 test--icon---3-EYW test--fail---2MHvz"></i>
-											{{/if}}
-											<h4 class="test--title---278p8" title="Full Report">
-												<b>Full Report</b>
-											</h4>
-											<div class="test--info---1upSW">
-												<span class="test--duration---16Zhh">{{this.commit.time}}</span>
-												<i class="material-icons md-18 test--duration-icon---2Bpxk fast"></i>
-											</div>
-										</header>
-									</a>
+									<header class="test--header---186ZB">
+										{{#if this.pass}}
+										<i class="material-icons md-18 test--icon---3-EYW test--pass---3BGXV"></i>
+										{{else}}
+										<i class="material-icons md-18 test--icon---3-EYW test--fail---2MHvz"></i>
+										{{/if}}
+										<h4 class="test--title---278p8" title="Full Report">
+											<a href="/{{../appName}}/{{this.commit.hash}}">
+												<b>Click here for Full Report</b>
+											</a>
+										</h4>
+										<div class="test--info---1upSW">
+											<span class="test--duration---16Zhh">{{this.commit.time}}</span>
+											<i class="material-icons md-18 test--duration-icon---2Bpxk fast"></i>
+										</div>
+									</header>
+									<div class="test--body---1Ytwa">
+										<pre class="test--code-snippet---anpV7 javascript hljs">
+											<code>
+												{{this.err.stderr}}
+											</code>
+										</pre>
+									</div>
 								</section>
 							</div>
 						</div>
 					</section>
-					{{/each}}
-					{{#unless (tests db appName)}}
+					{{/each}} {{#unless (tests db appName)}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">{{msg}}</h3>
 						</header>
 					</section>
-					{{/unless}}
-					{{#unless noHook}}
+					{{/unless}} {{#unless noHook}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">Start Manual Hook</h3>
@@ -95,6 +100,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 								<header class="test--header---186ZB">
 									<h4 class="test--title---278p8" title="Full Report">
 										<form action="/{{appName}}" method="get">
+											{{!-- Add input for commit hash --}}
 											<input type="text" name="secret" placeholder="Secret">
 											<input type="submit" value="Submit">
 										</form>
@@ -109,5 +115,12 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 		</main>
 	</div>
 </body>
-
+<script>
+	const tests = document.getElementsByClassName('suite--body---2Ql-3');
+	for(let i = 0; i < tests.length; i++) {
+		tests[i].addEventListener('click', function() {
+			this.getElementsByClassName('test--component---RMLbQ')[0].classList.toggle('test--expanded---1lye7');
+		});
+	}
+</script>
 </html>
