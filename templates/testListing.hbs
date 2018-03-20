@@ -14,7 +14,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 				<div class="navbar--report-info-cnt---3YmqH">
 					<a href="/">
 						<button class="navbar--menu-button---2yldF open-menu">
-							<i class="material-icons">↰</i>
+							<i class="material-icons md-18 test--icon---3-EYW">&#xE317;</i>
 						</button>
 					</a>
 					<h1 class="navbar--report-title---2yl5e" title="{{appName}}">
@@ -41,17 +41,20 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 							<h6 class="suite--filename---3LR5s">{{this.commit.message}} - {{this.commit.author}}</h6>
 							<ul class="suite-summary--component---1-m65">
 								<li class="suite-summary--summary-item---eDFZD suite-summary--duration---1c853">
-									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE425;</i>
 									<span class="">{{this.report.duration}}ms</span>
 								</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6">
-									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.tests}}</li>
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE85D;</i>{{this.report.tests}}</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--passed---171Lb">
-									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.passes}}</li>
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE876;</i>{{this.report.passes}}</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--failed---3NDrR">
-									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{this.report.failures}}</li>
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5CD;</i>{{this.report.failures}}</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--pending---14ai0">
-									<i class="material-icons md-18 suite-summary--icon---2dVpU"></i>{{add this.report.skipped this.report.pending}}</li>
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE034;</i>{{this.report.pending}}</li>
+								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE047;</i>{{this.report.skipped}}</li>
+
 							</ul>
 						</header>
 						<div class="suite--body---2Ql-3">
@@ -59,9 +62,9 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 								<section class="test--component---RMLbQ test--passed---1IkMe">
 									<header class="test--header---186ZB">
 										{{#if this.pass}}
-										<i class="material-icons md-18 test--icon---3-EYW test--pass---3BGXV"></i>
+										<i class="material-icons md-18 test--icon---3-EYW test--pass---3BGXV">&#xE876;</i>
 										{{else}}
-										<i class="material-icons md-18 test--icon---3-EYW test--fail---2MHvz"></i>
+										<i class="material-icons md-18 test--icon---3-EYW test--fail---2MHvz">&#xE5CD;</i>
 										{{/if}}
 										<h4 class="test--title---278p8" title="Full Report">
 											<a href="/{{../appName}}/{{this.commit.hash}}">
@@ -70,7 +73,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 										</h4>
 										<div class="test--info---1upSW">
 											<span class="test--duration---16Zhh">{{this.commit.time}}</span>
-											<i class="material-icons md-18 test--duration-icon---2Bpxk fast"></i>
+											<i class="material-icons md-18 test--duration-icon---2Bpxk fast">&#xE425;</i>
 										</div>
 									</header>
 									{{#if this.err.stderr}}
