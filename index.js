@@ -43,7 +43,8 @@ pmx.initModule({}, (err, conf) => {
 		await tests.compact();
 
 		// init the worker only if we can connect to pm2
-		new Worker(conf).start();
+		const worker = new Worker(conf);
+		await worker.start();
 	});
 });
 
