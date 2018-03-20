@@ -1,0 +1,7 @@
+a{
+    -webkit-transition:color .2s ease-out;
+    transition:color .2s ease-out;
+    text-decoration:none;
+    color: inherit;
+}
+a:hover{color:inherit}
