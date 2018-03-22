@@ -53,7 +53,10 @@ For now this is the way, until I publish this to npm.
 				"token": "",
 				// Specify remote url of repo if repo is private and using SSH origin
 				"remoteUrl": ""
-			}
+			},
+			// If a private config is required for running your apllication specify it's path relative to app's root
+			// It will copy this from your project root to the temporary directory for tests
+			"privateConfig": "private/config.js"
 		}
 	},
 	// If serving tests, the host where they are being served

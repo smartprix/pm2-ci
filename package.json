@@ -79,17 +79,14 @@
 					"token": "",
 					"remoteUrl": ""
 				},
-				"privateConfig": {
-					"src": "/root/source/private/config.js",
-					"dest": "private/config.js"
-				}
-			}
-		},
-		"host": "http://127.0.0.1",
-		"slack": {
-			"webhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX",
-			"channel": ""
-		},
+				"privateConfig": "/private/config.js"
+		}
+	},
+	"host": "http://127.0.0.1",
+	"slack": {
+		"webhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX",
+		"channel": ""
+	},
 		"logsDir": "/smartprix/logs/server_logs/pm2/githook",
 		"port": 8888
 	}
