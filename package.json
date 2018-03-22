@@ -68,26 +68,20 @@
 				"secret": "mysecret",
 				"prehook": "npm install --production && git submodule update --init",
 				"posthook": "echo done",
-				"service": "github",
+				"privateConfig": "/private/config.js",
 				"tests": {
 					"testCmd": "npm run install && npm run test",
 					"reportPath": "testReport/filename",
 					"lastGoodCommit": "COMMIT_HASH",
+					"githubToken": "",
 					"deployAnyway": true
-				},
-				"git": {
-					"token": "",
-					"remoteUrl": ""
-				},
-				"privateConfig": "/private/config.js"
-		}
-	},
-	"host": "http://127.0.0.1",
-	"slack": {
-		"webhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX",
-		"channel": ""
-	},
-		"logsDir": "/smartprix/logs/server_logs/pm2/githook",
+				}
+			}
+		},
+		"slackWebhook": "webhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX",
+		"slackChannel": "",
+		"host": "http://127.0.0.1",
+		"dataDir": "/smartprix/logs/server_logs/pm2/githook",
 		"port": 8888
 	}
 }

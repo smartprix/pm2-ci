@@ -38,6 +38,8 @@ For now this is the way, until I publish this to npm.
 				// Git bisect can be used to find the commit where tests started failing
 				// Specifiy the commit where tests were confirmed to be working and reports being generated
 				"lastGoodCommit": "COMMIT_HASH",
+				// Specifiy token if repo is private
+				"githubToken": "",
 				// IF tests are to be used only for reporting and not depolyment
 				"deployAnyway": true
 			},
@@ -45,15 +47,8 @@ For now this is the way, until I publish this to npm.
 			"prehook": "npm install --production && git submodule update --init",
 			// After restarting the application
 			"posthook": "echo done",
-			// Currently only works with github
+			// Currently only works with github (the default)
 			"service": "github",
-			// The git repo information, required for tests
-			"git": {
-				// Specifiy token if repo is private and using https origin
-				"token": "",
-				// Specify remote url of repo if repo is private and using SSH origin
-				"remoteUrl": ""
-			},
 			// If a private config is required for running your apllication specify it's path relative to app's root
 			// It will copy this from your project root to the temporary directory for tests
 			"privateConfig": "private/config.js"
@@ -62,12 +57,11 @@ For now this is the way, until I publish this to npm.
 	// If serving tests, the host where they are being served
 	"host": "http://127.0.0.1",
 	// Slack info to send updates
-	"slack": {
-		"webhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX",
-		// Leave channel blank if you want to disable slack
-		"channel": ""
-	},	
-	"logsDir": "/smartprix/logs/server_logs/pm2/githook",
+	// Leave channel blank if you want to disable slack
+	"slackWebhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX",
+	"slackChannel": "",
+	// Save test-reports, db, and a copy of logs
+	"dataDir": "/smartprix/logs/server_logs/pm2/githook",
 	"port": 8888
 }
 ```

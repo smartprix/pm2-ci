@@ -19,9 +19,9 @@ pmx.initModule({}, (err, conf) => {
 	if (typeof (conf.slack) !== 'object') {
 		conf.slack = JSON.parse(conf.slack);
 	}
-	logger.init(`${conf.logsDir}/logs`);
-	slack.init(conf.slack);
-	db.setPath(`${conf.logsDir}/db`);
+	logger.init(`${conf.dataDir}/logs`);
+	slack.init(conf);
+	db.setPath(`${conf.dataDir}/db`);
 
 	pm2.connect(async (err2) => {
 		if (err || err2) {
