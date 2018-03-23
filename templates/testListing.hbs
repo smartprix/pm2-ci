@@ -106,14 +106,14 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 							<form action="/{{appName}}" method="get">
 								<section class="test--component---RMLbQ">
 									<header class="test--header---186ZB">
-										<h4 class="test--title---278p8" title="Full Report">
+										<h4 class="test--title---278p8" title="Secret">
 											<input id="secret" type="text" name="secret" placeholder="Secret">
 										</h4>
 									</header>
 								</section>
 								<section class="test--component---RMLbQ">
 									<header class="test--header---186ZB">
-										<h4 class="test--title---278p8" title="Full Report">
+										<h4 class="test--title---278p8" title="Commit Hash">
 											<input id="manualCommit" type="text" name="commit" placeholder="Commit (Empty if latest)">
 											&nbsp;&nbsp;&nbsp;&nbsp;(Bisect will not be done if older commit)
 										</h4>
@@ -121,9 +121,18 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 								</section>
 								<section class="test--component---RMLbQ">
 									<header class="test--header---186ZB">
-										<h4 class="test--title---278p8" title="Full Report">
+										<h4 class="test--title---278p8" title="Send Slack">
 											&nbsp;&nbsp;
 											<input type="checkbox" name="slack"> &nbsp;&nbsp;&nbsp;&nbsp;Send Slack
+										</h4>
+									</header>
+								</section>
+								<section class="test--component---RMLbQ">
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Deploy">
+											&nbsp;&nbsp;
+											<input type="checkbox" name="deploy"> &nbsp;&nbsp;&nbsp;&nbsp;
+											Deploy (Won't if older commit and still dependent on tests passing and deployAnyway Conf)
 										</h4>
 									</header>
 								</section>
