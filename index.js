@@ -16,9 +16,6 @@ const db = require('./lib/db');
  * Init pmx module
  */
 pmx.initModule({}, (err, conf) => {
-	if (typeof (conf.slack) !== 'object') {
-		conf.slack = JSON.parse(conf.slack);
-	}
 	logger.init(`${conf.dataDir}/logs`);
 	slack.init(conf);
 	db.setPath(`${conf.dataDir}/db`);
