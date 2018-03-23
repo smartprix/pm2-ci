@@ -31,7 +31,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 			</div>
 			<div id="details" class="details container">
 				<div class="suite--list-main---39CaH">
-					{{#each (tests db appName)}}
+					{{#each (tests db appName page)}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">
@@ -91,7 +91,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 							</div>
 						</div>
 					</section>
-					{{/each}} {{#unless (tests db appName)}}
+					{{/each}} {{#unless (tests db appName page)}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">{{msg}}</h3>
@@ -99,10 +99,10 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 					</section>
 					{{/unless}} {{#unless noHook}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
-						<header class="suite--header---3CWtn">
+						<header id="manual-hook" class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">Start Manual Hook</h3>
 						</header>
-						<div class="suite--body---2Ql-3">
+						<div id="manual-hook-form" class="suite--body---2Ql-3" style="display: none;">
 							<form action="/{{appName}}" method="get">
 								<section class="test--component---RMLbQ">
 									<header class="test--header---186ZB">
@@ -114,8 +114,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 								<section class="test--component---RMLbQ">
 									<header class="test--header---186ZB">
 										<h4 class="test--title---278p8" title="Commit Hash">
-											<input id="manualCommit" type="text" name="commit" placeholder="Commit (Empty if latest)">
-											&nbsp;&nbsp;&nbsp;&nbsp;(Bisect will not be done if older commit)
+											<input id="manualCommit" type="text" name="commit" placeholder="Commit (Empty if latest)"> &nbsp;&nbsp;&nbsp;&nbsp;(Bisect will not be done if older commit)
 										</h4>
 									</header>
 								</section>
@@ -131,8 +130,8 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 									<header class="test--header---186ZB">
 										<h4 class="test--title---278p8" title="Deploy">
 											&nbsp;&nbsp;
-											<input type="checkbox" name="deploy"> &nbsp;&nbsp;&nbsp;&nbsp;
-											Deploy (Won't if older commit and still dependent on tests passing and deployAnyway Conf)
+											<input type="checkbox" name="deploy"> &nbsp;&nbsp;&nbsp;&nbsp; Deploy (Won't if older commit and still dependent on tests passing and deployAnyway
+											Conf)
 										</h4>
 									</header>
 								</section>
@@ -143,12 +142,27 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 										</h4>
 									</header>
 								</section>
-							</form>
+							</div>
 						</div>
 					</section>
 					{{/unless}}
 				</div>
 			</div>
+			{{#if page}}
+			<footer class="footer--component---3Cile">
+				<div class="pagination">
+						{{#if prevPage}}
+						<a href="{{pageLink prevPage query path}}">
+							<i id="previousPage" class="material-icons md-48">&#xE045;</i>
+						</a>
+						{{/if}}
+						<span>{{page}}</span>
+						<a href="{{pageLink nextPage query path}}">
+							<i id="nextPage" class="material-icons md-48">&#xE044;</i>
+						</a>
+				</div>
+			</footer>
+			{{/if}}
 		</main>
 	</div>
 </body>
@@ -164,9 +178,14 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 		reloads[i].addEventListener('click', function () {
 			const commit = document.getElementById('manualCommit');
 			commit.value = this.id;
-			commit.scrollIntoView({behavior: 'smooth'});
+			commit.scrollIntoView({ behavior: 'smooth' });
 		})
 	}
+	document.getElementById('manual-hook').addEventListener('click', function() {
+		const div = document.getElementById('manual-hook-form');
+		if (div.style.display === 'none') div.style.display = 'block';
+		else div.style.display = 'none';
+	});
 </script>
 
 </html>
