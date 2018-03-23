@@ -32,9 +32,6 @@ For now this is the way, until I publish this to npm.
 				// The test command to run (should exit with 0 for SUCCESS and any other for FAILURE)
 				// Should also include any prerequisites' installation
 				"testCmd": "npm run install && npm run test",
-				// Mochawesome reports can be parsed and results served through a webserver and slack
-				// Report path relative to project directory
-				"reportPath": "testReport/filename",
 				// Git bisect can be used to find the commit where tests started failing
 				// Specifiy the commit where tests were confirmed to be working and reports being generated
 				"lastGoodCommit": "COMMIT_HASH",
@@ -54,6 +51,7 @@ For now this is the way, until I publish this to npm.
 			"privateConfig": "private/config.js"
 		}
 	},
+	// Mochawesome reports can be parsed and results served through a webserver and slack
 	// If serving tests, the host where they are being served
 	"host": "http://127.0.0.1",
 	// Slack info to send updates

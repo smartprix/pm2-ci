@@ -70,7 +70,6 @@
 				"privateConfig": "/private/config.js",
 				"tests": {
 					"testCmd": "npm run install && npm run test",
-					"reportPath": "testReport/filename",
 					"lastGoodCommit": "COMMIT_HASH",
 					"githubToken": "",
 					"deployAnyway": true
