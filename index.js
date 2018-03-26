@@ -18,7 +18,7 @@ const db = require('./lib/db');
 pmx.initModule({}, (err, conf) => {
 	logger.init(`${conf.dataDir}/logs`);
 	slack.init(conf);
-	db.setPath(`${conf.dataDir}/db`);
+	// db.setPath(`${conf.dataDir}/db`);
 
 	pm2.connect(async (err2) => {
 		if (err || err2) {
@@ -26,19 +26,21 @@ pmx.initModule({}, (err, conf) => {
 			process.exit(1);
 			return;
 		}
+		const apps = Object.keys(conf.apps);
 		const tests = await db.getDb('tests');
 		try {
 			await tests.update(
 				{apps: {$exists: true}},
-				{$addToSet: {apps: {$each: Object.keys(conf.apps)}}},
+				{$addToSet: {apps: {$each: apps}}},
 				true
 			);
 		}
 		catch (e) {
-			await tests.insert({apps: Object.keys(conf.apps)});
+			await tests.insert({apps});
 		}
+		apps.map(app => db.convertOldDb(tests, app));
+		await Promise.all(apps);
 		await tests.compact();
-
 		// init the worker only if we can connect to pm2
 		const worker = new Worker(conf);
 		await worker.start();
