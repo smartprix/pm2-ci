@@ -176,6 +176,8 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 	const reloads = document.getElementsByClassName('reload');
 	for (let i = 0; i < reloads.length; i++) {
 		reloads[i].addEventListener('click', function () {
+			const div = document.getElementById('manual-hook-form');
+			div.style.display = 'block';
 			const commit = document.getElementById('manualCommit');
 			commit.value = this.id;
 			commit.scrollIntoView({ behavior: 'smooth' });
