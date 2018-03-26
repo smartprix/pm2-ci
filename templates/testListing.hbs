@@ -31,7 +31,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 			</div>
 			<div id="details" class="details container">
 				<div class="suite--list-main---39CaH">
-					{{#each (tests db appName page)}}
+					{{#each (tests db)}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">
@@ -91,7 +91,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 							</div>
 						</div>
 					</section>
-					{{/each}} {{#unless (tests db appName page)}}
+					{{/each}} {{#unless (tests db)}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">{{msg}}</h3>
