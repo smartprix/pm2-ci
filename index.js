@@ -18,7 +18,7 @@ const db = require('./lib/db');
 pmx.initModule({}, (err, conf) => {
 	logger.init(`${conf.dataDir}/logs`);
 	slack.init(conf);
-	// db.setPath(`${conf.dataDir}/db`);
+	db.setPath(`${conf.dataDir}/db`);
 
 	pm2.connect(async (err2) => {
 		if (err || err2) {
