@@ -62,7 +62,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 						<div class="suite--body---2Ql-3 {{#if this.err.stderr}}clickable-error{{/if}}">
 							<div>
 								<section class="test--component---RMLbQ test--passed---1IkMe">
-									<header class="test--header---186ZB">
+									<header class="test--header---186ZB clickable-area">
 										{{#if this.pass}}
 										<i class="material-icons md-18 test--icon---3-EYW test--pass---3BGXV">&#xE876;</i>
 										{{else}}
@@ -169,8 +169,8 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 <script>
 	const tests = document.getElementsByClassName('clickable-error');
 	for (let i = 0; i < tests.length; i++) {
-		tests[i].addEventListener('click', function () {
-			this.getElementsByClassName('test--component---RMLbQ')[0].classList.toggle('test--expanded---1lye7');
+		tests[i].getElementsByClassName('clickable-area')[0].addEventListener('click', function () {
+			tests[i].getElementsByClassName('test--component---RMLbQ')[0].classList.toggle('test--expanded---1lye7');
 		});
 	}
 	const reloads = document.getElementsByClassName('reload');
