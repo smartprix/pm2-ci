@@ -20,6 +20,12 @@ pmx.initModule({}, (err, conf) => {
 	slack.init(conf);
 	db.setPath(`${conf.dataDir}/db`);
 
+	process.on('uncaughtException', (error) => {
+		logger.error('UncaughtException:', error.message);
+		logger.error(error.stack);
+		process.exit(1);
+	});
+
 	pm2.connect(async (err2) => {
 		if (err || err2) {
 			logger.error('Error: %s', JSON.stringify(err || err2));
@@ -44,12 +50,5 @@ pmx.initModule({}, (err, conf) => {
 		// init the worker only if we can connect to pm2
 		const worker = new Worker(conf);
 		await worker.start();
-
-		process.on('uncaughtException', (error) => {
-			worker.server.close();
-			logger.error('UncaughtException:', error.message);
-			logger.error(error.stack);
-			process.exit(1);
-		});
 	});
 });
