@@ -44,6 +44,12 @@ pmx.initModule({}, (err, conf) => {
 		// init the worker only if we can connect to pm2
 		const worker = new Worker(conf);
 		await worker.start();
+
+		process.on('uncaughtException', (error) => {
+			worker.server.close();
+			logger.error('UncaughtException:', error.message);
+			logger.error(error.stack);
+			process.exit(1);
+		});
 	});
 });
-
