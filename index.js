@@ -24,7 +24,7 @@ pmx.initModule({}, (err, conf) => {
 		globalConf.wwwUrl.port = conf.port;
 	}
 
-	logger.init(`${conf.dataDir}/logs`);
+	// logger.init(`${conf.dataDir}/logs`);
 	slack.init(conf);
 	db.setPath(`${conf.dataDir}/db`);
 
