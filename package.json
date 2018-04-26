@@ -67,19 +67,20 @@
 				"secret": "mysecret",
 				"prehook": "npm install --production && git submodule update --init",
 				"posthook": "echo done",
-				"privateConfig": "/private/config.js",
 				"tests": {
+					"privateConfig": "/private/config.js",
 					"testCmd": "npm run install && npm run test",
 					"lastGoodCommit": "COMMIT_HASH",
 					"githubToken": "",
 					"deployAnyway": true
-				}
+				},
+				"debug": false
 			}
 		},
 		"slackWebhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXX",
 		"slackChannel": "",
 		"host": "http://127.0.0.1",
-		"dataDir": "/smartprix/logs/server_logs/pm2/githook",
+		"dataDir": "~/.pm2/pm2-ci",
 		"port": 8888
 	},
 	"apps": [
@@ -88,7 +89,7 @@
 			"merge_logs": true,
 			"script": "index.js",
 			"env": {
-				"PM2_EXTRA_DISPLAY" : "true"
+				"PM2_EXTRA_DISPLAY": "true"
 			}
 		}
 	]
