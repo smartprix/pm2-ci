@@ -1,65 +1,179 @@
+# PM2-CI
+
 ## Description
 
-PM2 module to receive http webhook from github, execute pre/post hook and gracefull reload the application using pm2.
+This is a PM2 module to do CI tasks like deploy, run tests, and send slack messages in response to a webhook.
 
-This is a fork of the original [pm2-githook](https://github.com/vmarchaud/pm2-githook) by vmarchaud. I found the error reporting lacking, ended up adding a few things like:
-* A different log dir which includes the hook outputs (didn't want to populate pm2 logs with anything more than success/error messages)
-* Automatic kill of any old running hooks for when your git pushes happen quicker than your hook completes
-* A test runner, the repository will be cloned in a temp dir and tests run before pulling the application (tests should exit with 0 for success and 1 for failure)
-* If your tests output [mochawesome](https://github.com/adamgruber/mochawesome) results, they can be served using the already active http server for githooks.
-	Report will be available at `http://127.0.0.1:8888/APP_NAME/COMMIT_HASH`, with the latest one being available at `http://127.0.0.1:8888/APP_NAME`
-* Slack notifications, receive slack notification on successfull deployment and tests passing/failing
+##### It assumes that the tests are run through `mocha`, and `mochawesome` is added as a dev-dependency to the app.
 
 ## Install/Update
 
-`pm2 install rohit-smpx/pm2-githook2`
+`pm2 install rohit-smpx/pm2-ci`
 
-For now this is the way, until I publish this to npm.
+For now this is the way, until the app is published to npm.
+
+## Flow of Module
+
+<pre>
+	Github/Manual Webhook (Set manual
+	webhook by visiting `host:port`)
+			|
+			v
+	Check if app is present in pm2 ls 
+	and request is valid (via secret)
+			|
+			V
+		Run tests (optional)			      __
+			|					|
+			V					|
+		  Run git bisect 				|
+		(only if tests fail) 				|- Tester Phase
+			|					| (skip by setting
+			V					| tests as false)
+		Send Slack				      __|
+		(test reports)
+			|						  
+			V				      __
+		Pull application				|
+			|					|
+			V					|
+		Run Prehook Command				|- Deploy Phase
+			|					| (Not run if
+			V					| tests fail and
+		Restart Application				| deployAnyway is false)
+			|					|
+			V					|
+		Run Posthook Command			      __|
+</pre>
 
 ## Configure
 
 ```
 {
-	// Contains configuration of applications you want managed by pm2-githook2
+	"apps": {},
+	"slackWebhook": "",
+	"slackChannel": "",
+	"port": 8888,
+	"host": "http://127.0.0.1/",
+	"dataDir": "~/.pm2/pm2-ci"
+}
+```
+
+### Apps
+Contains configuration of applications you want managed by pm2-ci.
+
+Each app is a JSON object like :
+
+```
+{
+	"secret": "",
+	"prehook": "npm install",
+	"posthook": "",
+	"cwd": "",
+	"debug": false
+	"tests": {},
+}
+```
+#### Secret
+The github webhook secret.
+
+#### Prehook
+The command to execute before restarting the application. Use it to do tasks like, `npm install`, `gulp`, `webpack`, etc.
+
+#### Posthook
+The command to run after restarting the application.
+
+#### CWD
+The current working directory of the app, it will be automatically set from info from PM2 listing. But you can overwrite it here.
+
+#### Debug
+By default only `stderr` of the prehook, posthook, and testCmd will be output to the logs. To enable `stdout` output too, set debug to true.
+
+### Apps - Tests
+
+Set this as false if you want to skip tests and only use this module as something like an auto deploy system.
+
+If running tests make sure tests are not dependent on any external service running, or that anything needed by the them is setup using the single `testCmd`. (Of note maybe the DB, any Cache, external APIs).
+Make sure the tests don't fail at random due to the app also running at the same time or another copy of the tests running at the same time.
+
+```
+{
+	"testCmd": "",
+	"githubToken": "",
+	"privateConfig": "",
+	"deployAnyway": false,
+	"lastGoodCommit": "HASH",
+}
+```
+
+#### Test Command (testCmd)
+The command to execute to run tests. It should also include any pre requisite stuff, like `npm install`. So if your test command is `npm run test`, the testCmd will need to be set as `npm install && npm run test`;
+
+**should exit with 0 for SUCCESS and any other for FAILURE**
+
+#### Github Token
+If your repo is private, please add an auth token to your profile and add it here. This is needed because the app makes a copy of your app in a temporary location to run tests.
+
+#### Private Config
+If your app is dependent on a private config to start, init properly and run tests. Specifiy the path to it relative to the app's cwd. It will be copied to the tests' temp directory before running tests.
+
+#### Deploy Anyway
+By default, if the tests fail the app is not pulled and restarted. But you can overwrite this behaviour with this option.
+
+
+#### Last Good Commit
+
+The Commit hash string of the know last good commit in the repo. This is used by `git bisect`. By default it is `HEAD~10` from the first time the a webhook is processed for the app.
+
+**Set it as the last know commit where test report was being generated and tests were being passed**
+
+### Slack
+If running tests, the results of the test can be messaged by slack to any channel.
+
+![Slack Msg Preview](./slack.png)
+
+#### slackWebhook
+The webhook url for slack.
+
+#### slackChannel
+The slack channel you want to send message to. Use @ for a person'd account, just the name for a channel.
+
+### Other Settings
+
+### Port
+The port at which the server will listen for webhooks.
+
+#### Host
+This is host string that will be used to generate report urls for the slack message. This is basically the public ip/url of the server where this is hosted. 
+So if this is behind a reverse proxy, use that address along with that port. 
+
+**If no port is used here, the port is added according to the other setting.**
+
+#### Data Directory
+This is where pm2-ci will copy the test reports too and keep a db with all the test results.
+
+
+## Example Config
+```
+{
 	"apps": {
-		// Example app
 		"app_name": {
-			// Github webhook secret
 			"secret": "mysecret",
-			// If tests are to be run before deploying application, remove this key if not
-			// If yes, a new temporary directory is created and tests run
 			"tests": {
-				// The test command to run (should exit with 0 for SUCCESS and any other for FAILURE)
-				// Should also include any prerequisites' installation
 				"testCmd": "npm run install && npm run test",
-				// Git bisect can be used to find the commit where tests started failing
-				// Specifiy the commit where tests were confirmed to be working and reports being generated
 				"lastGoodCommit": "COMMIT_HASH",
-				// Specifiy token if repo is private
+				"privateConfig": "private/config.js"
 				"githubToken": "",
-				// IF tests are to be used only for reporting and not depolyment
 				"deployAnyway": true
 			},
-			// The prerequisites before restarting the application
 			"prehook": "npm install --production && git submodule update --init",
-			// After restarting the application
 			"posthook": "echo done",
-			// Currently only works with github (the default)
-			"service": "github",
-			// If a private config is required for running your apllication specify it's path relative to app's root
-			// It will copy this from your project root to the temporary directory for tests
-			"privateConfig": "private/config.js"
 		}
 	},
-	// Mochawesome reports can be parsed and results served through a webserver and slack
-	// If serving tests, the host where they are being served
 	"host": "http://127.0.0.1",
-	// Slack info to send updates
-	// Leave channel blank if you want to disable slack
 	"slackWebhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX",
 	"slackChannel": "",
-	// Save test-reports, db, and a copy of logs
-	"dataDir": "/smartprix/logs/server_logs/pm2/githook",
+	"dataDir": "~/.pm2/pm2-ci",
 	"port": 8888
 }
 ```
@@ -67,23 +181,28 @@ For now this is the way, until I publish this to npm.
 #### How to set these values ?
 
  After having installed the module you have to type :
-`pm2 set pm2-githook:key value`
+`pm2 set pm2-ci:key value`
 
-To set the `apps` option and since its a json string, i advice you to escape it to be sure that the string is correctly set ([using this kind of tool](http://bernhardhaeussner.de/odd/json-escape/)).
+To set the `apps` option and since its a json string, it is adviced to escape it before to be sure that the string is correctly set ([using this kind of tool](http://bernhardhaeussner.de/odd/json-escape/)).
 
 e.g: 
-- `pm2 set pm2-githook:port 8080` (bind the http server port to 8080)
-- `pm2 set pm2-githook:apps "{\"APP_NAME\":{\"secret\":\"supersecret\",\"prehook\":\"npm install --production && git submodule update --init\",\"posthook\":\"echo done\"}}"` 
+- `pm2 set pm2-ci:port 8080` (bind the http server port to 8080)
+- `pm2 set pm2-ci:apps "{\"APP_NAME\":{\"secret\":\"supersecret\",\"prehook\":\"npm install --production && git submodule update --init\",\"posthook\":\"echo done\"}}"` 
 
-Or use 
+##### Or use 
+
 `pm2 conf`
-Edit the file and save. And then restart/reinstall module
+
+Edit the file and save. And then reinstall module
 
 ## Uninstall
 
-`pm2 uninstall pm2-githook2`
+`pm2 uninstall pm2-ci`
 
 ## Credits
 
-[@vmarchaud](https://github.com/vmarchaud) for the original [pm2-githook](https://github.com/vmarchaud/pm2-githook) module on which this is based.
-And to any other [contributors](https://github.com/vmarchaud/pm2-githook/graphs/contributors) of the original module.
+[@vmarchaud](https://github.com/vmarchaud) for the original [pm2-githook](https://github.com/vmarchaud/pm2-githook) module on which this is based. Though this is much different in scope now.
+And to any other [contributors](https://github.com/vmarchaud/pm2-githook/graphs/contributors) of the module.
+
+[Adam Gruber](https://github.com/adamgruber) for mochawesome/mochawesome-report-generator. The app listing and test listing templates are based on the mochawesome reports.
+And to any other [contributors](https://github.com/adamgruber/mochawesome-report-generator/graphs/contributors) of the module.
