@@ -23,17 +23,17 @@ For now this is the way, until the app is published to npm.
 	and request is valid (via secret)
 			|
 			V
-		Run tests (optional)			      __
+		Run tests (optional)			     __
 			|					|
 			V					|
 		  Run git bisect 				|
-		(only if tests fail) 				|- Tester Phase
+		(only if tests fail) 			|- Tester Phase
 			|					| (skip by setting
 			V					| tests as false)
-		Send Slack				      __|
+		Send Slack				     __|
 		(test reports)
 			|						  
-			V				      __
+			V				     __
 		Pull application				|
 			|					|
 			V					|
@@ -43,7 +43,7 @@ For now this is the way, until the app is published to npm.
 		Restart Application				| deployAnyway is false)
 			|					|
 			V					|
-		Run Posthook Command			      __|
+		Run Posthook Command			     __|
 </pre>
 
 ## Configure
