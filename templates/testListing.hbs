@@ -41,6 +41,7 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 							</h3>
 							<h6 class="suite--filename---3LR5s">{{this.commit.message}} - {{this.commit.author}}</h6>
 							<ul class="suite-summary--component---1-m65">
+							{{#if this.report.tests}}
 								<li class="suite-summary--summary-item---eDFZD suite-summary--duration---1c853">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE425;</i>
 									<span class="">{{this.report.duration}}ms</span>
@@ -57,6 +58,10 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE047;</i>{{this.report.skipped}}</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6 reload" id="{{this.commit.hash}}">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5D5;</i>Redo</li>
+							{{else}}
+							<li class="suite-summary--summary-item---eDFZD suite-summary--failed---3NDrR">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5CD;</i>Tests could not be run. No report generated</li>
+							{{/if}}
 							</ul>
 						</header>
 						<div class="suite--body---2Ql-3 {{#if this.err.stderr}}clickable-error{{/if}}">
@@ -69,9 +74,13 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 										<i class="material-icons md-18 test--icon---3-EYW test--fail---2MHvz">&#xE5CD;</i>
 										{{/if}}
 										<h4 class="test--title---278p8" title="Full Report">
+										{{#if this.report.tests}}
 											<a href="/{{../appName}}/{{this.commit.hash}}">
 												<b>Click here for Full Report</b>
 											</a>
+										{{else}}
+											<b>No report generated. Click here for error logs.</b>
+										{{/if}}
 										</h4>
 										<div class="test--info---1upSW">
 											<span class="test--duration---16Zhh">{{this.commit.time}}</span>
@@ -96,6 +105,13 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 						<header class="suite--header---3CWtn">
 							<h3 class="suite--title---CsLhu">{{msg}}</h3>
 						</header>
+					</section>
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
+						<a href="/{{appName}}">
+							<header class="suite--header---3CWtn">
+								<h3 class="suite--title---CsLhu">Go Back</h3>
+							</header>
+						</a>
 					</section>
 					{{/unless}} {{#unless noHook}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">

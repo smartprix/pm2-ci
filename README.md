@@ -93,6 +93,8 @@ By default only `stderr` of the prehook, posthook, and testCmd will be output to
 
 Set this as false if you want to skip tests and only use this module as something like an auto deploy system.
 
+If using this, for now tests only run with mocha, and make sure to include mochawesome as a dev-dependency in your app.
+
 If running tests make sure tests are not dependent on any external service running, or that anything needed by the them is setup using the single `testCmd`. (Of note maybe the DB, any Cache, external APIs).
 Make sure the tests don't fail at random due to the app also running at the same time or another copy of the tests running at the same time.
 
@@ -107,7 +109,7 @@ Make sure the tests don't fail at random due to the app also running at the same
 ```
 
 #### Test Command (testCmd)
-The command to execute to run tests. It should also include any pre requisite stuff, like `npm install`. So if your test command is `npm run test`, the testCmd will need to be set as `npm install && npm run test`;
+The command to execute to run tests, **should be an npm script calling [mocha](https://mochajs.org/)**. It should also include any pre requisite stuff, like `npm install`. So if your test command is `npm run test`, the testCmd will need to be set as `npm install && npm run test`;
 
 **should exit with 0 for SUCCESS and any other for FAILURE**
 
