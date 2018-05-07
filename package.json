@@ -1,6 +1,6 @@
 {
 	"name": "pm2-ci",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A PM2 module to run tests, deploy, send slack notifications on github webhooks",
 	"main": "index.js",
 	"scripts": {
