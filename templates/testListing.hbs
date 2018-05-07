@@ -56,12 +56,12 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE034;</i>{{this.report.pending}}</li>
 								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE047;</i>{{this.report.skipped}}</li>
-								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6 reload" id="{{this.commit.hash}}">
-									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5D5;</i>Redo</li>
 							{{else}}
-							<li class="suite-summary--summary-item---eDFZD suite-summary--failed---3NDrR">
+								<li class="suite-summary--summary-item---eDFZD suite-summary--failed---3NDrR">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5CD;</i>Tests could not be run. No report generated</li>
 							{{/if}}
+								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6 reload" id="{{this.commit.hash}}">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5D5;</i>Redo</li>
 							</ul>
 						</header>
 						<div class="suite--body---2Ql-3 {{#if this.err.stderr}}clickable-error{{/if}}">
