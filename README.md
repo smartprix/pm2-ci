@@ -201,6 +201,31 @@ Edit the file and save. And then reinstall module
 
 `pm2 uninstall pm2-ci`
 
+
+## TODO:
+
+- Use an internal queue to process requests
+	- **Possible Problems:** If two pushes are done very close by and the tests of the first pass and second fail, we might stil pull the application to the second commit. As the calls are not done in a queue.
+- Use vizion.revertTo instead of vizion.update in @pullTheApplication in [worker](./lib/Worker.js#L168)
+	- **Possible Problems:** Might pull a commit newer than the last one that passed tests
+	- Alternative: Use nodegit to pull the application directory
+- Add better UI to fire off manual hooks, manual deploys.
+- Add overlay over test report to add a back button
+- Add basicAuth
+- Use a single tmp directory for tests, instead of recloning everytime
+- Wrap slack in notification class, add email as an option for notifications
+- **Add Tests**
+- Use existing ssh key to clone private repos
+- Add branch filtering
+- Add branch test running from pull request comments
+
+## Contributing
+
+Fork and submit a pull request.
+To run just do `npm install` and `node index.js`.
+To run through pm2, use `pm2 install .` in the directory you cloned the project.
+
+
 ## Credits
 
 [@vmarchaud](https://github.com/vmarchaud) for the original [pm2-githook](https://github.com/vmarchaud/pm2-githook) module on which this is based. Though this is much different in scope now.
