@@ -8,6 +8,7 @@ const pmx = require('pmx');
 const pm2 = require('pm2');
 const {URL} = require('url');
 
+const version = require('./package.json').version;
 const Worker = require('./lib/Worker');
 const slack = require('./lib/slack');
 const logger = require('./lib/logger');
@@ -60,6 +61,7 @@ pmx.initModule({}, (err, conf) => {
 pmx.configureModule({
 	human_info: [
 		['Status', 'Launched'],
+		['Version', version],
 		['Port', globalConf.port],
 		['Apps', Object.keys(globalConf.apps).toString()],
 		['Tests', Object.keys(globalConf.apps).filter(app => globalConf.apps[app].tests).toString()],
