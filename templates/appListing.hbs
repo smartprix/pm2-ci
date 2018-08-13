@@ -43,9 +43,95 @@
 						</header>
 					</section>
 					{{/unless}}
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
+						<header id="add-app" class="suite--header---3CWtn">
+							<h3 class="suite--title---CsLhu">Add App</h3>
+						</header>
+						<div id="add-app-form" class="suite--body---2Ql-3" style="display: none;">
+							<form action="/{{appName}}/add" method="get">
+								<section class="test--component---RMLbQ">
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Secret">
+											<input id="appSecret" type="text" name="secret" placeholder="Secret">
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="PreHook">
+											<input id="appPrehook" type="text" name="prehook" placeholder="PreHook">
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="PostHook">
+											<input id="appPosthook" type="text" name="posthook" placeholder="PostHook">
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="cwd">
+											<input id="appCwd" type="text" name="cwd" placeholder="Current Working Directory">
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Debug">
+											&nbsp;&nbsp;
+											<input id="appDebug" type="checkbox" name="debug"> &nbsp;&nbsp;&nbsp;&nbsp;Debug
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Bisect">
+											&nbsp;&nbsp;
+											<input id="appBisect" type="checkbox" name="bisect"> &nbsp;&nbsp;&nbsp;&nbsp;Bisect
+										</h4>
+									</header>
+								</section>
+								<section class="test--component---RMLbQ">
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="testCmd">
+											<input id="appTestCmd" type="text" name="testCmd" placeholder="Test Command">
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="githubToken">
+											<input id="appGithubToken" type="text" name="githubToken" placeholder="GitHub Token">
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="privateConfig">
+											<input id="appPrivateConfig" type="text" name="privateConfig" placeholder="Private Config Path">
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="deployAnyway">
+											&nbsp;&nbsp;
+											<input id="appDeployAnyway" type="checkbox" name="deployAnyway"> &nbsp;&nbsp;&nbsp;&nbsp;Deploy Anyway
+										</h4>
+									</header>
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="lastGoodCommit">
+											<input id="appLastGoodCommit" type="text" name="lastGoodCommit" placeholder="Last Good Commit">
+										</h4>
+									</header>
+								</section>
+								<section class="test--component---RMLbQ">
+									<header class="test--header---186ZB">
+										<h4 class="test--title---278p8" title="Full Report">
+											<input type="submit" value="Submit">
+										</h4>
+									</header>
+								</section>
+							</form>
+						</div>
+					</section>
 				</div>
 			</div>
 		</main>
 	</div>
 </body>
+<script>
+	document.getElementById('add-app').addEventListener('click', function() {
+		const div = document.getElementById('add-app-form');
+		if (div.style.display === 'none') div.style.display = 'block';
+		else div.style.display = 'none';
+	});
+</script>
+
 </html>
