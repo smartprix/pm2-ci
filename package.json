@@ -74,13 +74,14 @@
 					"githubToken": "",
 					"deployAnyway": true
 				},
-				"debug": false
+				"debug": false,
+				"bisect": false
 			}
 		},
 		"slackWebhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXX",
 		"slackChannel": "",
 		"host": "http://127.0.0.1",
-		"dataDir": "~/.pm2/pm2-ci",
+		"dataDir": "./tmp",
 		"port": 8888
 	},
 	"apps": [
@@ -88,6 +89,11 @@
 			"name": "pm2-ci",
 			"merge_logs": true,
 			"script": "index.js",
+			"ignore_watch": [
+				"tmp",
+				"*.log",
+				".history"
+			],
 			"env": {
 				"PM2_EXTRA_DISPLAY": "true"
 			}

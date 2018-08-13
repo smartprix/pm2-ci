@@ -8,3 +8,5 @@ test/child
 .idea/**
 db.json
 *.db
+tmp
+.history
