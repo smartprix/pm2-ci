@@ -25,6 +25,23 @@
 			</div>
 			<div id="details" class="details container">
 				<div class="suite--list-main---39CaH">
+					{{#if msg}}
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
+						<header class="suite--header---3CWtn">
+							<h3 class="suite--title---CsLhu">Error:</h3>
+							<p>
+								{{msg}}
+							</p>
+						</header>
+					</section>
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
+						<a href="/">
+							<header class="suite--header---3CWtn">
+								<h3 class="suite--title---CsLhu">Go Back</h3>
+							</header>
+						</a>
+					</section>
+					{{/if}}
 					{{#each apps}}
 					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed suite--chart-enabled---23t51">
 						<header class="suite--header---3CWtn">
