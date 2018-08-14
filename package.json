@@ -91,7 +91,6 @@
 		{
 			"name": "pm2-ci",
 			"merge_logs": true,
-			"interpreter": "$NVM_DIR/versions/node/v8.11.3/bin/node",
 			"script": "index.js",
 			"ignore_watch": [
 				"tmp",
