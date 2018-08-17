@@ -64,6 +64,11 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 								<li class="suite-summary--summary-item---eDFZD suite-summary--failed---3NDrR">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5CD;</i>Tests could not be run. No report generated</li>
 							{{/if}}
+							{{#if this.coverage}}
+								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6">
+									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE85D;</i>
+									<a href="{{this.coverage.url}}" target="_"> {{this.coverage.pct}}</a></li>
+							{{/if}}
 								<li class="suite-summary--summary-item---eDFZD suite-summary--tests---DvmS6 reload" id="{{this.commit.hash}}">
 									<i class="material-icons md-18 suite-summary--icon---2dVpU">&#xE5D5;</i>Redo</li>
 							</ul>
