@@ -77,7 +77,8 @@
 					"deployAnyway": true
 				},
 				"debug": false,
-				"bisect": false
+				"bisect": false,
+				"slackChannel": ""
 			}
 		},
 		"slackWebhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXX",
@@ -96,7 +97,9 @@
 			"ignore_watch": [
 				"tmp",
 				"*.log",
-				".history"
+				".history",
+				".git",
+				".vscode"
 			],
 			"env": {
 				"PM2_EXTRA_DISPLAY": "true"
