@@ -70,8 +70,10 @@ Each app is a JSON object like :
 	"prehook": "npm install",
 	"posthook": "",
 	"cwd": "",
-	"debug": false
+	"debug": false,
 	"tests": {},
+	"bisect": false,
+	"slackChannel": "",
 }
 ```
 #### Secret
