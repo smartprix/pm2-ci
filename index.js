@@ -7,6 +7,7 @@
 const pmx = require('pmx');
 const pm2 = require('pm2');
 const {URL} = require('url');
+const path = require('path');
 
 const version = require('./package.json').version;
 const Worker = require('./lib/Worker');
@@ -24,6 +25,9 @@ pmx.initModule({}, (err, conf) => {
 	if (conf.host.lastIndexOf(':') < 7) {
 		globalConf.wwwUrl.port = conf.port;
 	}
+	console.log(conf.dataDir);
+	conf.dataDir = path.resolve(conf.dataDir);
+	console.log(conf.dataDir);
 
 	// logger.init(`${conf.dataDir}/logs`);
 	slack.init(conf);
