@@ -25,9 +25,7 @@ pmx.initModule({}, (err, conf) => {
 	if (conf.host.lastIndexOf(':') < 7) {
 		globalConf.wwwUrl.port = conf.port;
 	}
-	console.log(conf.dataDir);
 	conf.dataDir = path.resolve(conf.dataDir);
-	console.log(conf.dataDir);
 
 	// logger.init(`${conf.dataDir}/logs`);
 	slack.init(conf);
