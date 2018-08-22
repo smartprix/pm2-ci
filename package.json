@@ -99,7 +99,9 @@
 				"*.log",
 				".history",
 				".git",
-				".vscode"
+				".vscode",
+				"node_modules",
+				"package-lock.json"
 			],
 			"env": {
 				"PM2_EXTRA_DISPLAY": "true"
