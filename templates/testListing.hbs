@@ -265,6 +265,12 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 							</form>
 						</div>
 					</section>
+
+					<section class="suite--component---1WFoy suite--no-suites---2EVhf has-tests has-passed">
+						<header id="delete-app" class="suite--header---3CWtn">
+							<h3 class="suite--title---CsLhu">Delete App</h3>
+						</header>
+					</section>
 				</div>
 			</div>
 			{{#if page}}
@@ -311,6 +317,32 @@ mochawesome v3.0.2 | MIT License | https://github.com/adamgruber/mochawesome --}
 		const div = document.getElementById('edit-app-form');
 		if (div.style.display === 'none') div.style.display = 'block';
 		else div.style.display = 'none';
+	});
+	document.getElementById('delete-app').addEventListener('click', function() {
+		if (confirm('Do you really want to delete this app and its related files?')) {
+			const appName = window.location.href.split('/')[3]
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", appName + '/delete/', true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+			tryParseStatus = function(str) {
+				try{
+					return JSON.parse(str).status;
+				}
+				catch(err) {
+					return false;
+				}
+				return false;
+			}
+			xhr.onload  = function() {
+				if (xhr.response === 'N/A' || tryParseStatus(xhr.response)) {
+					location.href = '/?msg=' + 'Deleted '+appName;
+				}
+				else {
+					alert('Delete failed');
+				}
+			};
+			xhr.send();
+		}
 	});
 </script>
 
