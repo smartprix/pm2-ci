@@ -94,15 +94,7 @@
 			"name": "pm2-ci",
 			"merge_logs": true,
 			"script": "index.js",
-			"ignore_watch": [
-				"tmp",
-				"*.log",
-				".history",
-				".git",
-				".vscode",
-				"node_modules",
-				"package-lock.json"
-			],
+			"watch": ["lib", "templates", "server"],
 			"env": {
 				"PM2_EXTRA_DISPLAY": "true"
 			}
