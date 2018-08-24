@@ -130,6 +130,23 @@ router.get('/:appName', setAppMiddleware, async (ctx) => {
     return;
 });
 
+// Github webhook
+router.post('/:appName', setAppMiddleware, async (ctx, next) => {
+    if (ctx.method.toLowerCase() === 'post') {
+        ctx.body = 'OK';
+
+        // get the whole body before processing
+        ctx.request.body = '';
+        ctx.req.on('data', (data) => {
+            ctx.request.body += data;
+        }).on('end', () => {
+            ctx.worker.handleRequest(ctx);
+        });
+        return;
+    }
+    await next();
+})
+
 // edit app : localhost:8880/sm-crawler-dev/edit
 router.get('/:appName/edit', setAppMiddleware, async (ctx) => {
     if (ctx.state.app) {

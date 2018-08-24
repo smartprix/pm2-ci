@@ -34,21 +34,7 @@ function installRoutes(app, worker) {
 		}
 	})
 	app.use(router.routes(), router.allowedMethods());
-	app.use(async (ctx, next) => {
-		if (ctx.method.toLowerCase() === 'post') {
-			ctx.body = 'OK';
-	
-			// get the whole body before processing
-			ctx.request.body = '';
-			ctx.req.on('data', (data) => {
-				ctx.request.body += data;
-			}).on('end', () => {
-				worker.handleRequest(ctx);
-			});
-			return;
-		}
-		await next();
-	});	
+
 	app.use(async (ctx) => {
 		ctx.status = 404;
 		ctx.body = 'N/A';
