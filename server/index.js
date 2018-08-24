@@ -5,8 +5,8 @@ const renderer = require('koa-hbs-renderer');
 const auth = require('koa-basic-auth');
 const _ = require('lodash');
 
-const hbs = require('../lib/handlebars');
 const logger = require('../lib/logger');
+const hbs = require('./handlebars');
 const router = require('./router');
 
 const server = new Koa();
