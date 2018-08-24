@@ -26,7 +26,7 @@ const setAppMiddleware = (ctx, next) => {
  * @param {*} ctx 
  * @param {String} filePath file path
  */
-async function serveFile(ctx, filePath) {
+async function serveFile(ctx, filePath, root) {
     const ext = path.extname(filePath).slice(1);
     let type = '';
     switch (ext) {
@@ -38,7 +38,7 @@ async function serveFile(ctx, filePath) {
     try {
         await send(ctx, filePath, {
             gzip: true,
-            root: ctx.vars.dataDir,
+            root: root || ctx.vars.dataDir,
             maxAge: 30 * 24 * 60 * 60 * 1000,
         });
     }
@@ -70,6 +70,10 @@ router.get('/', async (ctx) => {
     ctx.state.apps = Object.keys(ctx.worker.apps);
     await ctx.render('appListing', ctx.state);
 });
+
+router.get('/assets/:asset', async (ctx) => {
+    await serveFile(ctx, ctx.params.asset, path.join(__dirname, '../templates/assets'));
+})
 
 // add app : localhost:8880/
 router.get('/apps/add', async (ctx) => {

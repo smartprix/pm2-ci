@@ -1,7 +1,5 @@
 const zlib = require('zlib');
-const path = require('path');
 const Koa = require('koa');
-const staticCache = require('koa-static-cache');
 const compress = require('koa-compress');
 const renderer = require('koa-hbs-renderer');
 const auth = require('koa-basic-auth');
@@ -16,13 +14,6 @@ const server = new Koa();
 server.use(compress({
 	threshold: 2048,
 	flush: zlib.Z_SYNC_FLUSH,
-}));
-
-server.use(staticCache(path.join(__dirname, '../templates/assets'), {
-	maxAge: 30 * 24 * 60 * 60,			// 1 year (max-age in seconds)
-	preload: false,						// don't cache file at start
-	prefix: '/assets',					// path to serve at
-	dynamic: true,						// load extra files if they exist
 }));
 
 server.use(renderer(hbs.options));
