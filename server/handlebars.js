@@ -8,6 +8,8 @@ hbs.registerHelper('tests', (db) => {
 	return [];
 });
 
+hbs.registerHelper('join', (arr) => arr.join(', '));
+
 hbs.registerHelper('pageLink', (pageNumber, query, pathname) => {
 	query.page = pageNumber;
 	const qs = Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
