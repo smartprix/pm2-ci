@@ -8,7 +8,10 @@ hbs.registerHelper('tests', (db) => {
 	return [];
 });
 
-hbs.registerHelper('join', (arr) => arr.join(', '));
+hbs.registerHelper('join', (arr) => {
+	if(Array.isArray(arr)) return arr.join(', ');
+	return '';
+});
 
 hbs.registerHelper('pageLink', (pageNumber, query, pathname) => {
 	query.page = pageNumber;
