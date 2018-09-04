@@ -78,7 +78,8 @@
 				},
 				"debug": false,
 				"bisect": false,
-				"slackChannel": ""
+				"slackChannel": "",
+				"branches": "a,b"
 			}
 		},
 		"slackWebhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXX",
