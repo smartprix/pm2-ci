@@ -48,6 +48,7 @@
 		"pmx": "^1.6.7",
 		"rotating-file-stream": "^1.3.7",
 		"simple-git": "^1.96.0",
+		"sm-utils": "^2.15.0",
 		"tmp": "0.0.33",
 		"vizion": "^2.0.2"
 	},
