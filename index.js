@@ -19,7 +19,7 @@ let globalConf;
 /**
  * Init pmx module
  */
-pmx.initModule({}, (err, conf) => {
+pmx.initModule({}, async (err, conf) => {
 	globalConf = conf;
 	globalConf.wwwUrl = new URL(conf.host);
 	if (conf.host.lastIndexOf(':') < 7) {
@@ -37,26 +37,30 @@ pmx.initModule({}, (err, conf) => {
 		process.exit(1);
 	});
 
+	conf.apps = await Worker.getApps();
+	globalConf.apps = conf.apps;
+	
 	// init only if we can connect to pm2
-	pm2.connect(async (err2) => {
-		if (err || err2) {
-			logger.error('Startup Error: %s', JSON.stringify(err || err2));
-			process.exit(1);
-			return;
-		}
-		// Compact db and delete older reports data & files (2 weeks) at start
-		await db.optimiseDbs(conf.dataDir);
-		conf.apps = await Worker.getApps();
-		globalConf.apps = conf.apps;
-
-		const worker = new Worker(conf);
-		try {
-			await worker.start();
-		}
-		catch (err3) {
-			logger.error(err3);
-			process.exit(1);
-		}
+	await new Promise((resolve, reject) => {
+		pm2.connect(async (err2) => {
+			if (err || err2) {
+				logger.error('Startup Error: %s', JSON.stringify(err || err2));
+				reject(err || err2);
+				return;
+			}
+			// Compact db and delete older reports data & files (2 weeks) at start
+			await db.optimiseDbs(conf.dataDir);
+			const worker = new Worker(conf);
+			try {
+				await worker.start();
+			}
+			catch (err3) {
+				logger.error(err3);
+				reject(err3);
+				return;
+			}
+			resolve();
+		});
 	});
 });
 
@@ -65,8 +69,8 @@ pmx.configureModule({
 		['Status', 'Launched'],
 		['Version', version],
 		['Port', globalConf.port],
-		['Apps', Object.keys(globalConf.apps).toString()],
-		['Tests', Object.keys(globalConf.apps).filter(app => globalConf.apps[app].tests).toString()],
+		['Apps', Object.keys(globalConf.apps || {}).toString()],
+		['Tests', Object.keys(globalConf.apps || {}).filter(app => ((globalConf.apps || {})[app] || {}).tests || '').toString()],
 		['Slack Channel', globalConf.slackChannel || 'N/A'],
 		['Host', globalConf.wwwUrl.origin],
 	],
