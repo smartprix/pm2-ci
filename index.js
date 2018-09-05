@@ -16,6 +16,22 @@ const logger = require('./lib/logger');
 const db = require('./lib/db');
 
 let globalConf = {};
+
+function updateConf() {
+	pmx.configureModule({
+		human_info: [
+			['Status', 'Launched'],
+			['Version', version],
+			['Port', globalConf.port],
+			['Apps', Object.keys(globalConf.apps || {}).toString()],
+			['Tests', Object.keys(globalConf.apps || {}).filter(app => ((globalConf.apps || {})[app] || {}).tests || '').toString()],
+			['Slack Channel', globalConf.slackChannel || 'N/A'],
+			['Host', globalConf.wwwUrl.origin],
+			['Queue Size', globalConf.worker && globalConf.worker.queue.size()]
+		],
+	});	
+}
+
 /**
  * Init pmx module
  */
@@ -51,9 +67,11 @@ pmx.initModule({}, async (err, conf) => {
 			conf.apps = await Worker.getApps();
 			globalConf.apps = conf.apps;
 
-			const worker = new Worker(conf);
+			const worker = new Worker(conf, updateConf);
 
 			globalConf.worker = worker;
+
+			updateConf();
 			try {
 				await worker.start();
 			}
@@ -65,17 +83,4 @@ pmx.initModule({}, async (err, conf) => {
 			resolve();
 		});
 	});
-});
-
-pmx.configureModule({
-	human_info: [
-		['Status', 'Launched'],
-		['Version', version],
-		['Port', globalConf.port],
-		['Apps', Object.keys(globalConf.apps || {}).toString()],
-		['Tests', Object.keys(globalConf.apps || {}).filter(app => ((globalConf.apps || {})[app] || {}).tests || '').toString()],
-		['Slack Channel', globalConf.slackChannel || 'N/A'],
-		['Host', globalConf.wwwUrl.origin],
-		['Queue Size', globalConf.worker && globalConf.worker.queue.size()]
-	],
 });
