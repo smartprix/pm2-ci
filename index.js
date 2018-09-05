@@ -23,10 +23,10 @@ function updateConf() {
 			['Status', 'Launched'],
 			['Version', version],
 			['Port', globalConf.port],
-			['Apps', Object.keys(globalConf.apps || {}).toString()],
-			['Tests', Object.keys(globalConf.apps || {}).filter(app => ((globalConf.apps || {})[app] || {}).tests || '').toString()],
+			['Apps', globalConf.worker && Object.keys(globalConf.worker.apps || {}).toString()],
+			['Tests', globalConf.worker && Object.keys(globalConf.worker.apps || {}).filter(app => ((globalConf.apps || {})[app] || {}).tests || '').toString()],
 			['Slack Channel', globalConf.slackChannel || 'N/A'],
-			['Host', globalConf.wwwUrl.origin],
+			['Host', (globalConf.wwwUrl || {}).origin],
 			['Queue Size', globalConf.worker && globalConf.worker.queue.size()]
 		],
 	});	
@@ -65,7 +65,6 @@ pmx.initModule({}, async (err, conf) => {
 			await db.optimiseDbs(conf.dataDir);
 
 			conf.apps = await Worker.getApps();
-			globalConf.apps = conf.apps;
 
 			const worker = new Worker(conf, updateConf);
 
