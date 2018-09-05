@@ -1,6 +1,6 @@
 {
 	"name": "pm2-ci",
-	"version": "1.3.1",
+	"version": "1.4.0",
 	"description": "A PM2 module to run tests, deploy, send slack notifications on github webhooks",
 	"main": "index.js",
 	"scripts": {
@@ -65,24 +65,6 @@
 		}
 	},
 	"config": {
-		"apps": {
-			"app_name": {
-				"secret": "mysecret",
-				"prehook": "npm install --production && git submodule update --init",
-				"posthook": "echo done",
-				"tests": {
-					"privateConfig": "/private/config.js",
-					"testCmd": "npm run install && npm run test",
-					"lastGoodCommit": "COMMIT_HASH",
-					"githubToken": "",
-					"deployAnyway": true
-				},
-				"debug": false,
-				"bisect": false,
-				"slackChannel": "",
-				"branches": "a,b"
-			}
-		},
 		"slackWebhook": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXX",
 		"slackChannel": "",
 		"authName": "admin",
