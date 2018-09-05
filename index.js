@@ -47,6 +47,8 @@ pmx.initModule({}, (err, conf) => {
 		// Compact db and delete older reports data & files (2 weeks) at start
 		await db.optimiseDbs(conf.dataDir);
 		conf.apps = await Worker.getApps();
+		globalConf.apps = conf.apps;
+
 		const worker = new Worker(conf);
 		try {
 			await worker.start();
