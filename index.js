@@ -15,7 +15,7 @@ const slack = require('./lib/slack');
 const logger = require('./lib/logger');
 const db = require('./lib/db');
 
-let globalConf;
+let globalConf = {};
 /**
  * Init pmx module
  */
@@ -37,9 +37,6 @@ pmx.initModule({}, async (err, conf) => {
 		process.exit(1);
 	});
 
-	conf.apps = await Worker.getApps();
-	globalConf.apps = conf.apps;
-	
 	// init only if we can connect to pm2
 	await new Promise((resolve, reject) => {
 		pm2.connect(async (err2) => {
@@ -50,7 +47,13 @@ pmx.initModule({}, async (err, conf) => {
 			}
 			// Compact db and delete older reports data & files (2 weeks) at start
 			await db.optimiseDbs(conf.dataDir);
+
+			conf.apps = await Worker.getApps();
+			globalConf.apps = conf.apps;
+
 			const worker = new Worker(conf);
+
+			globalConf.worker = worker;
 			try {
 				await worker.start();
 			}
@@ -73,5 +76,6 @@ pmx.configureModule({
 		['Tests', Object.keys(globalConf.apps || {}).filter(app => ((globalConf.apps || {})[app] || {}).tests || '').toString()],
 		['Slack Channel', globalConf.slackChannel || 'N/A'],
 		['Host', globalConf.wwwUrl.origin],
+		['Queue Size', globalConf.worker && globalConf.worker.queue.size()]
 	],
 });
