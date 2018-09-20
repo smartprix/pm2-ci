@@ -56,7 +56,7 @@ async function serveFile(ctx, filePath, root) {
  * @returns {Object} app config
  */
 function getAppConfig(query) {
-    const appConfig = _.pick(query, ['appName', 'secret', 'prehook', 'posthook', 'cwd', 'slackChannel']);
+    const appConfig = _.pick(query, ['appName', 'secret', 'prehook', 'posthook', 'cwd', 'slackChannel', 'pm2App']);
     appConfig.debug = query.debug === 'on';
     appConfig.bisect = query.bisect === 'on';
     appConfig.branches = query.branches.trim().split(',').map(branch => branch.trim()).filter(b => !/[^a-zA-Z0-9-_\*]+/.test(b)).filter(Boolean);
