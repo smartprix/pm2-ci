@@ -90,6 +90,7 @@ router.get('/apps/add', async (ctx) => {
     else {
         ctx.state.msg = 'App Name and Secret are required';
     }
+    ctx.state.app = {};
     await ctx.render('testListing', ctx.state);
 });
 

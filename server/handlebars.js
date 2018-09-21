@@ -2,6 +2,13 @@ const path = require('path');
 const Handlebars = require('handlebars');
 
 const hbs = Handlebars.create();
+const {file} = require('sm-utils');
+
+const form = file(`${__dirname}/../templates/appForm.hbs`);
+form.read().then((data) => {
+    const appFormTemplate = Handlebars.compile(data);
+	hbs.registerPartial('appForm', appFormTemplate) 
+});
 
 hbs.registerHelper('tests', (db) => {
 	if (Array.isArray(db)) return db.map(doc => doc.data);
