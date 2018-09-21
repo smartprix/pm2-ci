@@ -21,7 +21,7 @@ hbs.registerHelper('join', (arr) => {
 });
 
 hbs.registerHelper('envVars', (envVars) => {
-	return Object.keys(envVars).map(key => `${key}=${envVars[key]}`).join('\n');
+	return Object.keys(envVars).filter(key => Boolean(key) && Boolean(envVars[key])).map(key => `${key}=${envVars[key]}`).join('\n');
 })
 
 hbs.registerHelper('pageLink', (pageNumber, query, pathname) => {
