@@ -20,6 +20,10 @@ hbs.registerHelper('join', (arr) => {
 	return '';
 });
 
+hbs.registerHelper('envVars', (envVars) => {
+	return Object.keys(envVars).map(key => `${key}=${envVars[key]}`).join('\n');
+})
+
 hbs.registerHelper('pageLink', (pageNumber, query, pathname) => {
 	query.page = pageNumber;
 	const qs = Object.keys(query).map(key => `${key}=${query[key]}`).join('&');

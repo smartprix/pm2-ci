@@ -60,6 +60,11 @@ function getAppConfig(query) {
     appConfig.debug = query.debug === 'on';
     appConfig.bisect = query.bisect === 'on';
     appConfig.branches = query.branches.trim().split(',').map(branch => branch.trim()).filter(b => !/[^a-zA-Z0-9-_\*]+/.test(b)).filter(Boolean);
+    appConfig.envVars = {};
+    query.envVars.trim().split('\n').forEach(keyVal => {
+        const [key, val] = keyVal.trim().split('=');
+        appConfig.envVars[key] = val;
+    });
     appConfig.tests = _.pick(query, ['privateConfig', 'testCmd', 'lastGoodCommit', 'githubToken']);
     appConfig.tests.deployAnyway = query.deployAnyway === 'on';
     return appConfig;
@@ -122,6 +127,7 @@ router.get('/:appName', setAppMiddleware, async (ctx) => {
 
         const appsConfigDb = await db.getAppsConfigDb();
         ctx.state.app = await appsConfigDb.find({appName: ctx.state.appName}, true);
+        console.log(ctx.state.app.envVars)
         if (!Array.isArray(data)) ctx.state.msg = 'Nothing Here.';
         await ctx.render('testListing', {...ctx.state, query: ctx.query, path: ctx.request.URL.pathname});
     }
